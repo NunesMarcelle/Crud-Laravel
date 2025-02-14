@@ -39,18 +39,14 @@ class UserController extends Controller
 
     public function update(UserRequest $request, User $user)
     {
-        // Obtém os dados validados
         $data = $request->validated();
     
-        // Se a senha foi preenchida, criptografa antes de salvar
         if (!empty($data['password'])) {
             $data['password'] = bcrypt($data['password']);
         } else {
-            // Remove a chave 'password' se estiver vazia
             unset($data['password']);
         }
     
-        // Atualiza o usuário
         $user->update($data);
     
         return redirect()->route('user.index')->with('success', 'Usuário atualizado com sucesso!');
